@@ -113,12 +113,12 @@ public class UserServiceImpl implements UserService{
 		return userlist;
 	}
 	@Override
-	public boolean overlap(String userid) {
-		boolean idOverlap = true;
+	public boolean idSearch(String userid) {
+		boolean overlap = true;
 		List<User> list = readFile();
 		for(int i=0; i<list.size(); i++) {
 			if(userid.equals(list.get(i).getUserid())) {
-				idOverlap = false;
+				overlap = false;
 				break;
 			}
 		}

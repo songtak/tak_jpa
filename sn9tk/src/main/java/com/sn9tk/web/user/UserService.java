@@ -10,7 +10,5 @@ public interface UserService {
 	public boolean update(User user);
 	public boolean remove(String userid);
 	public List<User> list();
-	public void saveFile(User user);
-	public List<User> readFile();
-	public boolean overlap(String userid);
+	public boolean idSearch(String userid);
 }
