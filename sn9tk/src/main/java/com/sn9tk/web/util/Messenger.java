@@ -1,5 +1,5 @@
 package com.sn9tk.web.util;
 
 public enum Messenger {
-	SUCCESS, FAIL; 
+	SUCCESS, FAIL, FILE_READ_ERROR, FILE_SELECT_ERROR; 
 }

@@ -1,9 +1,8 @@
 package com.sn9tk.web.user;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import javax.swing.Spring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,58 +16,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sn9tk.web.util.Messenger;
 
-
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 	@Autowired UserService userService;
 	
-	@PostMapping("/join")
-	public Messenger join(@RequestBody User user) {
-		int count = userService.count();
-				userService.add(user);
-		return (userService.count()== count +1)?Messenger.SUCCESS:Messenger.FAIL;
+	@PostMapping("")
+	public Messenger post(@RequestBody User user) {
+		userService.register(user);
+		return Messenger.SUCCESS;
 	}
-	
-	@GetMapping("/list")
+	@GetMapping("")
 	public List<User> list(){
-		return userService.list();
-		
+		return userService.findAll();
 	}
-	
-	
-	@PostMapping("/login")
-	public Map<String,Object> login(@RequestBody User user) {
-		Map<String,Object> returnMap = new HashMap<>();
-		User loginedUser = userService.login(user);
-		if(loginedUser != null) {
-			returnMap.put("user",loginedUser);
-			returnMap.put("messenger",Messenger.SUCCESS);
-
-		}else {
-			returnMap.put("messenger",Messenger.FAIL);
-		}
-		return returnMap;
+	@GetMapping("")
+	public User detail(@PathVariable String userid) {
+		return userService.findOne(userid);
 	}
-	@GetMapping("/detail/{userid}")
-	public  User detail(@PathVariable String userid) {
-		return userService.detail(userid);
-	}
-	
-	@PutMapping("/update")
+	@PutMapping("")
 	public Messenger update(@RequestBody User user) {
-		System.out.println("업데이트 정보:::"+user);
-		return (userService.update(user)) ? Messenger.SUCCESS: Messenger.FAIL ;
+		userService.modify(user);
+		return Messenger.SUCCESS; 
 	}
-	@DeleteMapping("/remove/{userid}")
-	public Messenger remove(@PathVariable String userid) {
-		return (userService.remove(userid)) ? Messenger.SUCCESS: Messenger.FAIL;
+	@DeleteMapping("")
+	public Messenger delete(@RequestBody User user) {
+		userService.remove(user);
+		return Messenger.SUCCESS;
 	}
 	
-	@GetMapping("/overlap/{userid}")
-	public Messenger overlap(@PathVariable String userid) {
-		return (userService.overlap(userid)) ? Messenger.SUCCESS: Messenger.FAIL ;
-		
-	}
-
 }

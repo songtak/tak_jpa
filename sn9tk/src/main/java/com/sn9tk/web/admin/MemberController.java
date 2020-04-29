@@ -1,5 +1,5 @@
 package com.sn9tk.web.admin;
-
+/*
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,3 +56,4 @@ public Admin delete(@RequestBody Admin member) {
 	
 	
 }
+*/

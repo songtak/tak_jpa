@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-public class FileTest {
+public class DataTest {
 	public final static String File_PAHT = "C:\\Users\\bit-6\\spring-workspace\\bit_Spring\\src\\main\\java\\com\\sn9tk\\web\\member\\";
 	public static void main(String[] args) {
 		try {

@@ -7,7 +7,7 @@ import lombok.ToString;
 
 @Getter @Setter
 public class User {
-	public String name, userid, passwd, ssn, addr;
+	public String name, userid, passwd, ssn, addr, profile, email, phoneNumber, registerDate;
 	@Override
 	public String toString() {
 		return String.format("%s, %s, %s, %s, %s", userid,passwd,name,ssn, addr);
