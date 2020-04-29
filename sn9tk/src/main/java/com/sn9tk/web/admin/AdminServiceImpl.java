@@ -1,6 +1,7 @@
 package com.sn9tk.web.admin;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -26,7 +27,11 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 	private String createEmployNumber() {
-		return null;
+		String startNum = "";
+		for(int i=0; i<4; i++) {
+			startNum += String.valueOf((int)(Math.random()*10));
+		}
+		return startNum; //
 	}
 
 	@Override
