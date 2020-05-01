@@ -2,125 +2,53 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 목록</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <style>
-* {
-  box-sizing: border-box;
-}
-body {
-  font-family: Arial, Helvetica, sans-serif;
-}
-/* Style the header */
-header {
-  background-color: #866;
-  padding: 30px;
-  text-align: center;
-  font-size: 35px;
-  color: white;
-}
-/* Create two columns/boxes that floats next to each other */
-nav {
-  float: left;
-  width: 30%;
-  height: 300px; /* only for demonstration, should be removed */
-  background: #ccc;
-  padding: 20px;
-}
-/* Style the list inside the menu */
-nav ul {
-  list-style-type: none;
-  padding: 0;
-}
-article {
-  float: left;
-  padding: 20px;
-  width: 70%;
-  background-color: #F1F1F1;
-  height: 300px; /* only for demonstration, should be removed */
-}
-/* Clear floats after the columns */
-section:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-/* Style the footer */
-footer {
-  background-color: #777;
-  padding: 10px;
-  text-align: center;
-  color: white;
-}
-/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
-@media (max-width: 600px) {
-  nav, article {
-    width: 100%;
-    height: auto;
-  }
-}
+html, body{width: 100%; height:100%;overflow:hidden; min-height: 100%;}
+.border_black{border:1px solid black;}
+.center{margin: 0 auto}
+.width_full{width:'100%';height:'100%'}
 </style>
 </head>
 <body>
-<h2> 회원가입 </h2>
-<section>
-  <nav>
-    <ul>
-      <li><a id="a-first" href="#">Join</a></li>
-      <li><a id="a-second" href="../index.html">Login</a></li>
-      <li><a id="a-third" href="#">...</a></li>
-    </ul>
-  </nav>
-  <article>
-   <form action="#">
-   	<label>NAME</label><br>
-   	<input id = "name" type="text" /> <br>
-    <label>ID </label> <br>
-   	<input id = "userid" type="text"/> <br>
-   	<label>PASSWORD</label><br>
-   	<input id ="passwd" type="text"/> <br>
-   	<label>SSN</label><br>
-   	<input id ="ssn" type="text"/> <br>
-   	<label>Address</label><br>
-   	<input id = "address" type="text"><br>
-   	<input id="join-button" type="button" value="회원가입">
-   	<input id="cancel-button" type="button" value="취소">
-   	
-   </form>
-  </article>
-</section>
-<footer>
-  <p>Footer</p>
-</footer>
+<div>
+     <table id="members">
+     	<tr><td id="title" colspan="2"><h1>회원 목록</h1></td></tr>
+     	<tr><td id="nav" colspan="2">회원 조회, 회원 수, 회원 정보 수정, 회원 탈퇴</td></tr>
+     	<tr><td id="sidemenu">회원 목록</td>
+     	<td id="content">
+     		<table id="member_list">
+     			<tr><td>No.</td><td>아이디</td><td>이름</td><td>SSN</td><td>주소</td></tr>
+     		</table>
+     	</td></tr>
+     	<tr><td id="footer" colspan="2">footer</td></tr>
+     </table>
+</div>
 <script>
-$('#join-button').click(e =>{
-	e.preventDefault()
-	$.ajax({
-		url: '/member/join',
-		type: 'post',
-		data: JSON.stringify({
-			name:$('#name').val(),
-					userid:$('#userid').val(),
-					passwd:$('#passwd').val(),
-					ssn:$('#ssn').val(),
-					address:$('#address').val()}),
-		dataType: 'json',
-		contentType:'application/json',
-		success: d=> {
-		    if(d === 'SUCCESS'){ //==는 인트값에 비교 ===는 인스턴스 값에 비교
-		    	location.href = "../index.html"
-		    }else{
-		    	location.href="join.html"
-		    }
-		},
-		error: (request,status,error)=>{
-			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error)
+$('#members').css({width:'80%',height:'900px' }).addClass('border_black center')
+$('#members tr').addClass('border_black width_full')	
+$('#sidemenu').css({width:'10%'}).addClass('border_black')	
+$('#content').addClass('border_black')	
+$('#member_list').addClass('border_black').css({'width':'100%'})
+$('#member_list tr').addClass('border_black width_full')
+$.getJSON('/user/list', d=> {
+	alert('리스트 수: '+d.length)
+	let list = ''
+		for(let i=0;i< d.length;i++){
+			list += '<tr><td>'+(i+1)+'</td><td>'+d[i].userid+'</td><td>'
+			+d[i].name+'</td><td>'+d[i].ssn+'</td><td>'+d[i].addr+'</td></tr>'
 		}
-	})
+	$('#member_list').append(list)
+	$('#member_list tr td').addClass('border_black').css({width: '20%'})
 })
-$('#cancel-button').click(e => {
-	alert('취소 버튼 클릭')
-})
+
+
+
+
 </script>
 </body>
 </html>

@@ -2,7 +2,11 @@ package com.sn9tk.web.admin;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public interface AdminService {
+
 	public void register(Admin admin);
 
 	public List<Admin> findAll();
