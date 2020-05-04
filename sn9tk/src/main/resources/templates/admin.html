@@ -2,13 +2,81 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>사용자페이지</title>
+    <title>관리자 페이지</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="/resorces/js/admin.js">
+    <link rel="stylesheet" href="/resources/css/global.css" />
+    <script type="text/javascript" src="/resources/js/user.js"></script>
+    <script type="text/javascript" src="/resources/js/admin.js"></script>
+    <style>
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 20px 100px;
+  text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #111;
+}
+.active {
+  background-color: #4CAF50;
+}
+li {
+  border-right: 1px solid #bbb;
+}
+
+li:last-child {
+  border-right: none;
+}
+ul {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+    </style>
 </head>
 <body>
-<script>
-admin.init()
-</script>
+
+<ul>
+  <li><a class="active" href="#home">Admin</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="#about">About</a></li>
+</ul>
+    <table id="kcdc" style="margin: 100px auto; height: 90%">
+        <tr>
+            <td style="border: 3px solid black; width: 20%;margin-top: 200px"></td>
+            <td colspan="3" style="border: 3px solid black; width: 80%;margin-top: 200px">
+                   <table border = "2" style = "width : 1000px; height : 10%;margin-top: 250px;text-align: center;table-layout: fixed;">
+        <tr>
+            <td style="width:5%;">번호 </td><td style="width:8%;"> 아이디 </td> <td style="width:8%;">이름</td><td style="width:13%;">주민번호</td><td style="width:13%;">메일</td><td style="width:13%;">핸드폰번호</td><td style="width:13%;">등록날짜</td>
+        </tr>
+        <tr>
+            <td> </td> <td></td><td></td><td></td><td></td><td></td><td></td>
+        </tr>
+    </table>        
+            	<div id="content" style="width: 1200px; height: 500px;margin: 0 auto">
+            	</div>
+            </td>
+        </tr>
+ <script>
+ 	
+     
+ </script>
 </body>
+
 </html>

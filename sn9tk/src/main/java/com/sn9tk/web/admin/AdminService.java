@@ -1,9 +1,9 @@
 package com.sn9tk.web.admin;
 
+
 import java.util.List;
 
 import org.springframework.stereotype.Component;
-
 @Component
 public interface AdminService {
 

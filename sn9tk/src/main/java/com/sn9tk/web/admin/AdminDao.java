@@ -2,6 +2,8 @@ package com.sn9tk.web.admin;
 
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+@Component
 public interface AdminDao {
 
 	public void insert(Admin admin);
@@ -13,5 +15,4 @@ public interface AdminDao {
 	public void update(Admin admin);
 
 	public void delete(Admin admin);
-
 }
