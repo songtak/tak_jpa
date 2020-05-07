@@ -36,7 +36,6 @@ public class AdminController{
 	}
 	@GetMapping("/{employNumber}")  
 	public Admin detail(@PathVariable String employNumber) {
-		admin.setEmployNumber(employNumber);
 		return adminService.findOne(employNumber);
 	}
 	@PutMapping("/{employNumber}")

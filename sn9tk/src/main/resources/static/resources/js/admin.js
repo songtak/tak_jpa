@@ -4,83 +4,122 @@ var admin = admin || {}
 
 admin = (() => {
 	const WHEN_ERROR = `호출하는 JS 파일을 찾지 못했습니다.`
-		let admin_vue
-		let init = () => {
-			admin_vue = `/resources/vue/admin_vue.js`
-			onCreate()
-		}
-		let onCreate = () =>{
-			$.when(
-				$.getScript(admin_vue)
-			).done(()=>{
-				setContentView()
-				$('#register_a').click(e=>{
-			     	$('#content').empty()
-			     	$('#content').html(adminVue.join())
-			     	
-			     	$(`<input type="button"/>`)
-			     	.attr({value:'등록'})
-			     	.css({width: '200px', height: '100px','font-size': '30px'})
-			     	.appendTo('#button_box')
-			     	.click(e => {
-			     		alert('등록버튼 클릭')
-			     	})
-			     	$(`<input type="button"/>`)
-			     	.attr({value:'취소'})
-			     	.css({width: '200px', height: '100px','font-size': '30px'})
-			     	.appendTo('#button_box')
-			     	.click( e=>{
-			     		alert('취소버튼 클릭')
-			     	})
-			     	
-			     })
-			     $('#access_a').click(e=>{
-			    	 alert('접속')
-			    	 e.preventDefault()
-			    	 $('#content').empty()
-			    	 $('#content').html(adminVue.login())
-			    	 $(`<input type="button" >`)
-			    	 .attr({value:"로그인"})
-			    	 .appendTo('#login_box')
-			    	 .click(e=>{
-			    		 e.preventDefault()
-			    		 location.href = "/admin"
-			    		 /*$.ajax({
-			    			 url : ``,
-			    			 type : `post`,
-			    			 data : JSON.stringify({
-			    				 
-			    			 }),
-			    			 dataType : `json`,
-			    			 contentType : `application/json`,
-			    			 success : d => {
-			    				// location.href = "/admin"
-			    			 },
-			    			 error : (r, x, e) => {
-			    				 alert(r)
-			    			 }
-			    		 }) */
-			    	 })
-					 $(`<input type="button">`)
-					 .attr({value:"취소"})
-					 .appendTo('#login_box')
-					 .click(e => {
-						 e.preventDefault()
-					 })
-					   	
-			    	})
-			}).fail(()=>{
-				alert(WHEN_ERROR)
+	let user_vue
+	let init = () => {
+		user_vue = `/resources/vue/user_vue.js`
+		onCreate()
+	}
+	let onCreate = () => {
+		$.when(
+			$.getScript(user_vue)
+		).done(()=>{
+			setContentView()
+			$.getJSON('/users', d => {
+				$('#total_count').text('총회원수  : '+d.length)
+				$.each(d, (i, j) => {
+					$(`<tr>
+	                        	<td>
+	                                <span>${i+1}</span>
+	                            </td>
+	                            <td>
+	                                <span>${j.userid}</span>
+	                            </td>
+	                            <td>
+	                                <span id="user_`+(i+1)+`"></span>
+	                            </td>
+	                             <td>
+	                                <span>${j.ssn}</span>
+	                            </td>
+	                           <td>
+	                                <span>${j.email}</span>
+	                            </td>
+	                            <td>
+	                                <span>${j.phoneNumber}</span>
+	                            </td>
+	                            <td>
+	                                <span>${j.registerDate}</span>
+	                            </td>
+	                            
+	                        </tr>`).appendTo('#userData')
+	                        
+                        $(`<a>${j.name}</a>`)
+                        .css({cursor: 'pointer',color: 'blue'})
+                        .appendTo("#user_"+(i+1))
+                        .click(e => {
+                        	$('#userData').empty()
+                        	$(userVue.detail())
+                        	.appendTo('#userData')
+                        	  $.getJSON(`/users/${j.userid}`, d => {
+                        		  $('#userId').text(d.userid)
+                        		
+                        	 })
+                        	
+                        	
+	               })
+				}) // each
+			}) // getJSON
+			
+			$('#loss').click(e=>{
+				e.preventDefault()
+				$('#content').empty()
+				$('#content').html(`<table id="loss">
+                        <tr>
+                        <th>
+                            <span>No.</span>
+                        </th>
+                        <th>
+                            <span>분실물 ID</span>
+                        </th>
+                         <th>
+                            <span>습득물품명</span>
+                        </th>
+                       <th>
+                            <span>습득일자</span>
+                        </th>
+                        <th>
+                            <span>습득물분류</span>
+                        </th>
+                        <th>
+                            <span>습득위치(지하철)</span>
+                        </th>
+                    </tr>
+                    
+                </table>`)
+                
+               $.getJSON(`/loss`, d=>{
+            	   $.each(d, (i, j)=>{
+            			$(`<tr>
+                                <td>
+                                    <span>No.</span>
+                                </td>
+                                <td>
+                                    <span>${j.lossid}</span>
+                                </td>
+                                 <td>
+                                    <span>${j.item}</span>
+                                </td>
+                               <td>
+                                    <span>${j.date}</span>
+                                </td>
+                                <td>
+                                    <span>${j.category}</span>
+                                </td>
+                                <td>
+                                    <span>${j.location}</span>
+                                </td>
+                            </tr>`).appendTo('#loss')
+            		   
+            	   })
+               })	
 			})
-			
-			
-		}
-		let setContentView = () =>{
-			$('#kcdc').css({ width: '80%', height: '900px' }).addClass('border_black center')
-		     $('#tr_1').css({ width: '80%', height: '50px' }).addClass('border_black center')
-		     $('#menu').css({ width: '80%', height: '50px' }).addClass('border_black center')
-		     $('#kcdc td').addClass('border_black', 'width_full')
-		}
-		return {init}
+		}).fail(()=>{
+			alert(WHEN_ERROR)
+		})
 		
-	})()
+	}
+	let setContentView = () => {
+		$('#userData tr').first().css({'background-color':'yellow'})
+	}
+	return {init}
+	
+})()

@@ -15,7 +15,6 @@ user = (()=>{
 			$('#register_a').click(e=>{
 		     	$('#content').empty()
 		     	$('#content').html(adminVue.join())
-		     	
 		     	$(`<input type="button"/>`)
 		     	.attr({value:'등록'})
 		     	.css({width: '200px', height: '100px','font-size': '30px'})
@@ -33,7 +32,6 @@ user = (()=>{
 		     	
 		     })
 		     $('#access_a').click(e=>{
-		    	 alert('접속')
 		    	 e.preventDefault()
 		    	 $('#content').empty()
 		    	 $('#content').html(adminVue.login())
@@ -66,6 +64,10 @@ user = (()=>{
 					 e.preventDefault()
 				 })
 				   	
+		    	 
+		    	 
+		    	 
+			    
 		    	})
 		}).fail(()=>{
 			alert(WHEN_ERROR)
